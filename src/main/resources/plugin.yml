@@ -1,0 +1,4 @@
+name: OneBlockWorld
+version: ${project.version}
+main: io.github.craftizz.oneblockworld.OneBlockWorld
+api-version: 1.17
