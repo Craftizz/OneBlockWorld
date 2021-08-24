@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.world.TimeSkipEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,8 +19,7 @@ public class WorldListener implements Listener {
     }
 
     /**
-     * Listens to {@link WorldInitEvent} to make sure that the
-     * spawn chunks will not be loaded
+     * Listens to {@link WorldInitEvent} to make sure that the spawn chunks will not be loaded
      */
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onWorldInitializeCancelChunkLoad(final WorldInitEvent event) {
@@ -28,5 +28,13 @@ public class WorldListener implements Listener {
             world.setKeepSpawnInMemory(false);
         }
     }
+
+    @EventHandler (priority = EventPriority.NORMAL)
+    public void onWorldTimeSkipEvent(final TimeSkipEvent event) {
+
+
+    }
+
+
 
 }

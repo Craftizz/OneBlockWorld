@@ -27,7 +27,7 @@ public class TestCommand extends CommandBase {
     @SubCommand("create")
     public void onCreateCommand(final Player player) {
 
-        final OneBlock oneBlock = plugin.getOneBlockManager().createOneBlock();
+        final OneBlock oneBlock = plugin.getOneBlockManager().createOneBlock(null);
         this.uniqueId = oneBlock.getUniqueId();
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {

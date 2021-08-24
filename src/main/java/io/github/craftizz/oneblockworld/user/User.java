@@ -2,10 +2,7 @@ package io.github.craftizz.oneblockworld.user;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class User {
 
@@ -35,6 +32,15 @@ public class User {
      */
     public void addProfile(final @NotNull UserProfile userProfile) {
         profiles.put(userProfile.getSlot(), userProfile);
+    }
+
+    /**
+     * Get the next empty profile of the user's profile
+     *
+     * @return a int slot
+     */
+    public Integer getNextEmptyProfile() {
+        return Collections.min(profiles.keySet());
     }
 
     /**
