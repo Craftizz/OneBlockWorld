@@ -23,7 +23,6 @@ public class OneBlockGenerator extends ChunkGenerator {
         return Collections.emptyList();
     }
 
-
     @Override
     public boolean canSpawn(@NotNull World world,
                             int x, int z) {

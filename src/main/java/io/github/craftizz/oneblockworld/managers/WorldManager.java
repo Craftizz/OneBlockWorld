@@ -1,20 +1,25 @@
 package io.github.craftizz.oneblockworld.managers;
 
 import io.github.craftizz.oneblockworld.OneBlockWorld;
+import io.github.craftizz.oneblockworld.oneblock.OneBlock;
 import io.github.craftizz.oneblockworld.oneblock.generators.OneBlockGenerator;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
 public class WorldManager {
 
     private static final OneBlockGenerator generator = new OneBlockGenerator();
 
-    private static final String uuidPattern = "/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/";
+    private static final String uuidPattern = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}";
     private static final Pattern pattern = Pattern.compile(uuidPattern);
 
     private final OneBlockWorld plugin;
@@ -46,6 +51,8 @@ public class WorldManager {
      */
     public World createOneBlockWorld(final @NotNull UUID uniqueId) {
 
+        final long startTime = System.currentTimeMillis();
+
         // Create World
         final World world = createOrLoadWorld(uniqueId);
 
@@ -60,9 +67,25 @@ public class WorldManager {
 
             oneBlock.setType(Material.GRASS_BLOCK);
             bedrockBlock.setType(Material.BEDROCK);
+
+            plugin.getLogger().warning("OneBlock world created in " + (System.currentTimeMillis() - startTime) + "ms");
         });
 
         return world;
+    }
+
+    /**
+     * Get the World of the OneBlock
+     *
+     * @param oneBlock is the queried oneBlock
+     * @return the World of the OneBlock
+     */
+    public World getWorld(final @NotNull OneBlock oneBlock) {
+        return getWorld(oneBlock.getUniqueId());
+    }
+
+    public World getWorld(final @NotNull UUID uniqueId) {
+        return plugin.getServer().getWorld(uniqueId.toString());
     }
 
     /**
@@ -76,13 +99,47 @@ public class WorldManager {
     }
 
     /**
+     * Deletes the world data
+     *
+     * @param uniqueId is the UniqueId of the world
+     */
+    public void deleteWorld(final @NotNull UUID uniqueId) {
+
+        final File directory = getWorld(uniqueId).getWorldFolder();
+        unloadWorld(uniqueId, false);
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                FileUtils.deleteDirectory(directory);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Checks if {@param block} is a OneBlock block.
+     *
+     * @param block is the block to be check
+     * @return if the block is a OneBlock
+     */
+    public boolean isOneBlock(final @NotNull Block block) {
+        return block.getX() == 0 && block.getY() == 32 && block.getZ() == 0;
+    }
+
+    /**
      * Checks if the {@param world} is a OneBlock world. It uses
      * {@link Pattern} to check if the world name is a UUID.
      *
      * @param world is the world to be check
      * @return if the world is a oneBlockWorld
      */
-    public static boolean isOneBlockWorld(final @NotNull World world) {
+    public boolean inOneBlock(final @NotNull World world) {
         return pattern.matcher(world.getName()).find();
     }
+
+    public boolean inOneBlock(final @NotNull Block block) {
+        return inOneBlock(block.getWorld());
+    }
+
 }
