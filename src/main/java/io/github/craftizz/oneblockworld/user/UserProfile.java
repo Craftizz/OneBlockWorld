@@ -7,19 +7,19 @@ import java.util.UUID;
 public class UserProfile {
 
     private final Integer slot;
-    private final UUID oneBlockUniqueId;
+    private final UUID uniqueId;
 
     public UserProfile(final @NotNull Integer slot,
-                       final @NotNull UUID oneBlockUniqueId) {
+                       final @NotNull UUID uniqueId) {
         this.slot = slot;
-        this.oneBlockUniqueId = oneBlockUniqueId;
+        this.uniqueId = uniqueId;
     }
 
     public Integer getSlot() {
         return slot;
     }
 
-    public UUID getOneBlockUniqueId() {
-        return oneBlockUniqueId;
+    public UUID getUniqueId() {
+        return uniqueId;
     }
 }

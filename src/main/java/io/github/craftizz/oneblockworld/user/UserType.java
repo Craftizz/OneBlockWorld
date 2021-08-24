@@ -2,7 +2,7 @@ package io.github.craftizz.oneblockworld.user;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum MemberType {
+public enum UserType {
 
     OWNER(100),
     MEMBER(75),
@@ -12,7 +12,7 @@ public enum MemberType {
 
     private final Integer level;
 
-    MemberType(final @NotNull Integer level) {
+    UserType(final @NotNull Integer level) {
         this.level = level;
     }
 

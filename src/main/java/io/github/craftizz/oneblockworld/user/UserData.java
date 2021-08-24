@@ -4,13 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class Member {
+public class UserData {
 
     private final UUID uniqueId;
-    private final MemberType memberType;
+    private final UserType memberType;
 
-    public Member(final @NotNull UUID uniqueId,
-                  final @NotNull MemberType memberType) {
+    public UserData(final @NotNull UUID uniqueId,
+                    final @NotNull UserType memberType) {
         this.uniqueId = uniqueId;
         this.memberType = memberType;
     }
@@ -19,7 +19,7 @@ public class Member {
         return uniqueId;
     }
 
-    public MemberType getMemberType() {
+    public UserType getMemberType() {
         return memberType;
     }
 }

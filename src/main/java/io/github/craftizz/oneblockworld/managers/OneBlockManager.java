@@ -2,8 +2,6 @@ package io.github.craftizz.oneblockworld.managers;
 
 import io.github.craftizz.oneblockworld.OneBlockWorld;
 import io.github.craftizz.oneblockworld.oneblock.OneBlock;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -24,10 +22,6 @@ public class OneBlockManager {
 
     public OneBlock getOneBlock(final @NotNull UUID uniqueId) {
         return oneBlocks.get(uniqueId);
-    }
-
-    public void getOneBlockByPlayer(final @NotNull UUID uniqueId) {
-
     }
 
     public OneBlock createOneBlock() {

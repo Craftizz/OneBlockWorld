@@ -5,21 +5,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 public class OneBlock {
 
     private final UUID uniqueId;
 
-    private final EnumSet<SettingType> settings;
-    private final HashSet<UUID> weakMemberList;
+    private final Set<UUID> weakMemberList;
+
+    private final EnumMap<SettingType, Integer> settings;
 
     public OneBlock(final @NotNull UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.weakMemberList = new HashSet<>();
-        this.settings = EnumSet.allOf(SettingType.class);
+        this.settings = new EnumMap<>(SettingType.class);
     }
 
     /**
@@ -36,7 +35,7 @@ public class OneBlock {
         return Bukkit.getWorld(uniqueId.toString());
     }
 
-    public HashSet<UUID> getWeakMemberList() {
+    public Set<UUID> getWeakMemberList() {
         return weakMemberList;
     }
 }

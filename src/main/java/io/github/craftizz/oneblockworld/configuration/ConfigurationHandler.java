@@ -11,7 +11,6 @@ import io.github.craftizz.oneblockworld.oneblock.spawnable.SpawnableBlock;
 import io.github.craftizz.oneblockworld.oneblock.spawnable.SpawnableEntity;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.yaml.snakeyaml.util.EnumUtils;
 
 public class ConfigurationHandler {
 

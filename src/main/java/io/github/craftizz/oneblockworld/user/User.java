@@ -11,17 +11,13 @@ public class User {
 
     private final UUID uniqueId;
 
-    private final HashSet<Member> members;
+    private final HashSet<UserData> userDataSet;
     private final HashMap<Integer, UserProfile> profiles;
 
-    public User(final @NotNull UUID uniqueId,
-                final @NotNull HashSet<Member> members,
-                final @NotNull HashMap<Integer, UserProfile> profiles) {
-
+    public User(final @NotNull UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.members = members;
-        this.profiles = profiles;
-
+        this.userDataSet = new HashSet<>();
+        this.profiles = new HashMap<>();
     }
 
     /**
@@ -33,10 +29,21 @@ public class User {
     }
 
     /**
-     * @return all the {@link UserProfile} of the user
+     * Adds a userprofile to the profiles hashmap
+     *
+     * @param userProfile the user profile to be added
      */
-    public HashMap<Integer, UserProfile> getProfiles() {
-        return profiles;
+    public void addProfile(final @NotNull UserProfile userProfile) {
+        profiles.put(userProfile.getSlot(), userProfile);
+    }
+
+    /**
+     * Adds a userdata to the userdata set
+     *
+     * @param userData the userdata to be added
+     */
+    public void addUserData(final @NotNull UserData userData) {
+        this.userDataSet.add(userData);
     }
 
     /**
@@ -57,15 +64,29 @@ public class User {
     /**
      * @return all the OneBlocks that the user is a member on
      */
-    public HashSet<Member> getMembers() {
-        return members;
+    public HashSet<UserData> getUserData() {
+        return userDataSet;
     }
 
     /**
-     * @param uniqueId the uniqueId of the OneBlock
-     * @return the Member Type
+     * @return all the {@link UserProfile} of the user
      */
-    public Optional<Member> getMemberOf(final @NotNull UUID uniqueId) {
-        return members.stream().filter(member -> member.getUniqueId().equals(uniqueId)).findFirst();
+    public HashMap<Integer, UserProfile> getProfiles() {
+        return profiles;
+    }
+
+    /**
+     * Checks if the user is a member of a OneBlock
+     *
+     * @param uniqueId the uniqueId of the OneBlock
+     * @return the UserData Type
+     */
+    public Optional<UserData> getUserData(final @NotNull UUID uniqueId) {
+        for (final UserData userData : userDataSet) {
+            if (userData.getUniqueId().equals(uniqueId)) {
+                return Optional.of(userData);
+            }
+        }
+        return Optional.empty();
     }
 }
