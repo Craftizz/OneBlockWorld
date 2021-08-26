@@ -53,6 +53,15 @@ public class User {
     }
 
     /**
+     * Removes a userdata from the userdata set
+     *
+     * @param uniqueId the uniqueId of the userData
+     */
+    public void removeUserData(final @NotNull UUID uniqueId) {
+        this.userDataSet.removeIf(userData -> userData.getUniqueId().equals(uniqueId));
+    }
+
+    /**
      * @return the primary {@link UserProfile} of the user
      */
     public UserProfile getPrimaryProfile() {
@@ -95,4 +104,21 @@ public class User {
         }
         return Optional.empty();
     }
+
+    /**
+     * Sets the UserType of userData
+     *
+     * @param uniqueId the uuid of the OneBlock
+     * @param userType the type of user
+     */
+    public void setUserTypeOfUserData(final @NotNull UUID uniqueId,
+                                      final @NotNull UserType userType) {
+        for (final UserData userData : userDataSet) {
+            if (userData.getUniqueId().equals(uniqueId)) {
+                userData.setMemberType(userType);
+                break;
+            }
+        }
+    }
+
 }

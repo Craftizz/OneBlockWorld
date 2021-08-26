@@ -3,6 +3,7 @@ package io.github.craftizz.oneblockworld.database;
 import de.leonhard.storage.Json;
 import de.leonhard.storage.internal.FileData;
 import de.leonhard.storage.sections.FlatFileSection;
+import io.github.craftizz.oneblockworld.oneblock.OneBlock;
 import io.github.craftizz.oneblockworld.user.User;
 import io.github.craftizz.oneblockworld.user.UserData;
 import io.github.craftizz.oneblockworld.user.UserProfile;
@@ -70,6 +71,20 @@ public class UserDataHelper {
 
         // Write
         userFile.write();
+    }
+
+    /**
+     * Deletes a OneBlock data on the user data
+     *
+     * @param oneBlockUniqueId the uuid of the oneblock
+     * @param userUniqueId the uuid of the user
+     * @param userFile the json file of the user
+     */
+    public void deleteOneBlock(final @NotNull UUID oneBlockUniqueId,
+                               final @NotNull UUID userUniqueId,
+                               final @NotNull Json userFile) {
+        userFile.removeAll(userUniqueId + ".profiles." + oneBlockUniqueId,
+                userUniqueId + ".user-data." + oneBlockUniqueId);
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 public class UserData {
 
     private final UUID uniqueId;
-    private final UserType memberType;
+    private UserType memberType;
 
     public UserData(final @NotNull UUID uniqueId,
                     final @NotNull UserType memberType) {
@@ -17,6 +17,10 @@ public class UserData {
 
     public UUID getUniqueId() {
         return uniqueId;
+    }
+
+    public void setMemberType(UserType memberType) {
+        this.memberType = memberType;
     }
 
     public UserType getMemberType() {

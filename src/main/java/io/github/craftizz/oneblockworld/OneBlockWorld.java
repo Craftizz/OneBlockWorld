@@ -10,6 +10,7 @@ import io.github.craftizz.oneblockworld.managers.PhaseManager;
 import io.github.craftizz.oneblockworld.managers.UserManager;
 import io.github.craftizz.oneblockworld.managers.WorldManager;
 import me.mattstudios.mf.base.CommandManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,7 +44,6 @@ public final class OneBlockWorld extends JavaPlugin {
         // Start Loading Configurations
         configurationHandler.loadPhases();
 
-
         // Register Listeners
         final PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new WorldListener(this), this);
@@ -53,18 +53,20 @@ public final class OneBlockWorld extends JavaPlugin {
         this.commandManager = new CommandManager(this);
         commandManager.register(new TestCommand(this));
 
-
-
-
-
+        startSaving();
     }
-
-
-
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        userManager.saveAllUser();
+        oneBlockManager.saveAllOneBlock();
+    }
+
+    public void startSaving() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            userManager.saveAllUser();
+            oneBlockManager.saveAllOneBlock();
+        }, 300 * 20, 300 * 20);
     }
 
     public WorldManager getWorldManager() {
